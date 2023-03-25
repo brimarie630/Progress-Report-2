@@ -40,21 +40,22 @@ client.on("messageCreate", (message) => {
 
         var roleID = message.guild.roles.cache.find((r) => r.name === role_name);
 
+        const { PermissionsBitField } = require('discord.js');
+
         //Create Category
         message.guild.channels.create({
             name: cat_name,
             type: 4,
-            permissionOverwrites: [
-                {
-                    id: message.guild.id,
-                    deny: [PermissionsBitField.Flags.ViewChannel],
-                },
-                {
-                    id: '1076352621532696586',
-                    allow: [PermissionsBitField.Flags.ViewChannel],
-                },
-            ],
-        });
+        }).then(cat => {
+            message.guild.channels.create('announcements', {
+                type: 0,
+                parent: cat,
+                permissionOverwrites: [
+                    {
+                        id: message.guild.id,
+                        allow: ['VIEW_CHANNEL'],
+                    }]
+            });
 
         //Victory
         message.channel.send("Created category named: " + cat_name);
@@ -65,11 +66,11 @@ client.on("messageCreate", (message) => {
         //introduce-yourself
         //chat
 
-        var catID = message.guild.channels.cache.find((c) => c.name === cat_name);
-        message.guild.channels.create({
-            name: 'announcements',
-            type: 2,
-            parent: catID,
+       // var catID = message.guild.channels.cache.find((c) => c.name === cat_name);
+       // message.guild.channels.create({
+         //   name: 'announcements',
+        //    type: 2,
+          //  parent: catID,
         });
 
 
@@ -89,10 +90,34 @@ client.on("messageCreate", (message) => {
 
         //Victory
         message.channel.send("Created category named: " + chan_name);
-    }
+    
+        // Create a new role
+
+        
+    //}else if(command === 'role_create' + role_name){
+    //guild.roles.create({
+     //   name: role_name,
+      //  color: 'BLUE',
+     //   reason: 'we needed a role for Super Cool People',
+    
+        //.then(console.log)
+        //.catch(console.error);
+    
+    //Create a new role attempt 2
+    }else if(command === 'role_create'){
+    guild.roles.create({ 
+        name: 'Mod',
+        permissions: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.KickMembers] 
+    }); 
+}
+    
+    
+
+
 });
 
        
 
 
-client.login("token");
+client.login("MTA2NjE1MzMzODg5NjQwNDU5MQ.G4-QV-.IPeWC0aKyQB7Iiig5oBuNsFrMgA-HbSROlbmWs");
+
